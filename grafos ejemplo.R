@@ -119,5 +119,6 @@ grafico <-  ggraph(sec_graph, 'fr') +
   theme_graph()  +
   scale_size(guide = "none")
 
+
 gros <- ggplot_gtable(ggplot_build(grafico))$grobs
 plot(gros[[15]])
