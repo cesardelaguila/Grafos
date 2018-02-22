@@ -38,14 +38,14 @@ select * from CF_RecomFinal
 
 
 DROP TABLE #CUC
-select PkProducto, '{'+cast(CodCUC as varchar)+'}' as CUC, DesCategoria, DesSubCategoria into #CUC
+select PkProducto, '{'+cast(CodCUC as varchar)+'}' as CUC, DesCategoria, DesSubCategoria, DesMarca
+into #CUC
 from  DWH_ANALITICO.dbo.DWH_DPRODUCTO 
 where CodPais = 'CL' 
-and DesCategoria in ('tratamiento corporal', 'tratamiento facial', 'cuidado personal', 'maquillaje', 'fragancias')
+and DesCategoria in  ('fragancias')
+and DesMarca in ('ESIKA')
 and CodCUC <> '' and CodCUC is not null
 --(15765 row(s) affected)
-
-
 
 
 drop table #PkNuevas
@@ -62,4 +62,9 @@ INNER JOIN #PkNuevas b on a.PkEbelista = b.PkEbelista and CodPais = 'CL' and Ani
 inner join #CUC c on a.PkProducto = c.PKProducto and CodPais = 'CL' 
 inner join CF_RecomFinal d on c.CUC = d.Izquierda 
 
-select top (1000) * from CF_RecomFinal_Consultoras
+select  * from CF_RecomFinal_Consultoras a
+inner join NUEVASG b on a.PKEbelisTa = b.pkebelista
+where TargetExito = 1
+
+
+
